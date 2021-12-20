@@ -1,12 +1,19 @@
 const express = require('express');
-
+const connection = require('./db-config')
 const app = express();
 const PORT = process.env.PORT || 4000;
-const server = app.listen(PORT, ()=>{
-    console.log('Server is Started', PORT);
-});
-
+const routes = require('./routes/index')
 const io = require('socket.io')(server);
+
+app.use(express.json())
+
+connection.connect(err => {
+  if(err) {
+    console.error('error connecting: ' + err.stack)
+  } else {
+    console.log('connected as id ' + connection.threadId)
+  }
+})
 
 io.on('connection', (socket)=> {
     console.log("Connected Successfully", socket.id);
@@ -18,4 +25,8 @@ io.on('connection', (socket)=> {
         console.log(data);
         socket.broadcast.emit('message-receive',data)
     })
+});
+
+app.listen(PORT, ()=>{
+  console.log('Server is Started', PORT);
 });
