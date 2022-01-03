@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
   const usersID = [req.query.id1, req.query.id2]
-  mysql.query('SELECT * FROM channels WHERE id_user_1 = ? AND id_user_2 = ?)',
+  mysql.query('SELECT * FROM channels WHERE id_user_1 = ? AND id_user_2 = ?',
   usersID), (err, result) => {
     if(err) {
       res.status(500).send('No channel found ' + err)
