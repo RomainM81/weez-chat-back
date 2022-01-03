@@ -14,8 +14,6 @@ io.on('connection', (socket)=> {
         console.log("Disconnected", socket.id);
     })
 
-    //bonsoir
-
     socket.on('message',(data)=>{
         console.log(data);
         socket.broadcast.emit('message-receive',data)
