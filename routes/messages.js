@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/:channel', (req, res) => {
   const sqlValue = [req.params.channel]
-  mysql.query('SELECT * FROM messages WHERE channels_id = ? ORDER BY date_posted ASC',
+  mysql.query('SELECT * FROM messages WHERE id_channel = ? ORDER BY date_created ASC',
   sqlValue, (err, result) => {
     if(err) {
       res.status(500).send('Error retrieving messages' + err)
@@ -17,7 +17,7 @@ router.get('/:channel', (req, res) => {
 
 router.post('/newMessage/', (req, res) => {
   const sqlValue = [req.params.text, req.params.channels_id, req.params.users_id]
-  mysql.query('INSERT INTO messages (text, date_posted, channels_id, users_id) VALUES (?, NOW(), ?, ?)',
+  mysql.query('INSERT INTO messages (text, date_created,  id_author, id_dest, id_channel) VALUES (?, NOW(), ?, ?, ?)',
   sqlValue, (err, result) => {
     if(err) {
       res.status(500).send('Error Posting message' + err)

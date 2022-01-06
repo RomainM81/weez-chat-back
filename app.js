@@ -11,6 +11,7 @@ require("./config/socket")(http);
 app.use(express.json())
 
 app.use('/channels', routes.channels)
+app.use('/messages', routes.messages)
 app.use('/users', routes.users)
 
 connection.connect(err => {
